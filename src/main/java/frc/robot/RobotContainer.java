@@ -6,8 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.PS4Controller;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
@@ -37,8 +40,9 @@ public class RobotContainer {
   private final LauncherSubsystem m_launcher = new LauncherSubsystem();
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
+  private final ClimberSubsystem m_climber = new ClimberSubsystem();
 
-  private XboxController m_driverController = new XboxController(Constants.OIConstants.kDriverControllerPort);
+  private PS4Controller m_driverController = new PS4Controller(Constants.OIConstants.kDriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -60,7 +64,7 @@ public class RobotContainer {
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * edu.wpi.first.wpilibj.Joystick} or {@link PS4Controller}), and then passing
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
@@ -69,38 +73,43 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new RunCommand(
         () -> m_drivetrain.driveArcade(
             MathUtil.applyDeadband(-m_driverController.getLeftY(), Constants.OIConstants.kDriveDeadband),
-            MathUtil.applyDeadband(m_driverController.getRightX() * Constants.Drivetrain.kTurningScale,
+            MathUtil.applyDeadband(m_driverController.getLeftX() * Constants.Drivetrain.kTurningScale,
                 Constants.OIConstants.kDriveDeadband)),
         m_drivetrain));
-
-    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_driverController, PS4Controller.Button.kL1.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
     new Trigger(
-        () -> m_driverController.getLeftTriggerAxis() > Constants.OIConstants.kTriggerButtonThreshold)
+        () -> m_driverController.getL2Axis() > Constants.OIConstants.kTriggerButtonThreshold)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
-    new JoystickButton(m_driverController, XboxController.Button.kStart.value)
+    new JoystickButton(m_driverController, PS4Controller.Button.kPS.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kHomePosition)));
 
     // intake controls (run while button is held down, run retract command once when
     // the button is
     // released)
     new Trigger(
-        () -> m_driverController.getRightTriggerAxis() > Constants.OIConstants.kTriggerButtonThreshold)
+        () -> m_driverController.getR2Axis() > Constants.OIConstants.kTriggerButtonThreshold)
         .whileTrue(new RunCommand(() -> m_intake.setPower(Constants.Intake.kIntakePower), m_intake))
         .onFalse(m_intake.retract());
 
-    new JoystickButton(m_driverController, XboxController.Button.kY.value)
+    new JoystickButton(m_driverController, PS4Controller.Button.kTriangle.value)
         .whileTrue(new RunCommand(() -> m_intake.setPower(-1.0)));
 
     // launcher controls (button to pre-spin the launcher and button to launch)
-    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
-        .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
+    new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
+            .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
 
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
-        .onTrue(m_intake.feedLauncher(m_launcher));
+    new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
+            .onTrue(m_intake.feedLauncher(m_launcher));
 
+    new JoystickButton(m_driverController, PS4Controller.Button.kCircle.value)
+            .whileTrue(new RunCommand(() -> m_climber.setPower(.5)))
+            .onFalse(new RunCommand(() -> m_climber.setPower(0)));
+    new JoystickButton(m_driverController, PS4Controller.Button.kSquare.value)
+            .whileTrue(new RunCommand(() -> m_climber.setPower(-.5)))
+            .onFalse(new RunCommand(() -> m_climber.setPower(0)));
     // set up arm manual and auto functions
-  }
+}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

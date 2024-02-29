@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private CANSparkMax m_frontLeftMotor;
@@ -60,6 +61,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("FL",m_frontLeftMotor.getOutputCurrent());
+    SmartDashboard.putNumber("BL",m_rearLeftMotor.getOutputCurrent());
+    SmartDashboard.putNumber("FR",m_frontRightMotor.getOutputCurrent());
+    SmartDashboard.putNumber("BR",m_rearRightMotor.getOutputCurrent());
     // This method will be called once per scheduler run
   }
 

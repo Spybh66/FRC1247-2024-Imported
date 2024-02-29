@@ -26,14 +26,14 @@ public final class Constants {
     
     public static final class Drivetrain {
         public static final int kFrontLeftCanId = 1;
-        public static final int kFrontRightCanId = 2;
-        public static final int kRearLeftCanId = 3;
-        public static final int kRearRightCanId = 4;
+        public static final int kFrontRightCanId = 4;
+        public static final int kRearLeftCanId = 2;
+        public static final int kRearRightCanId = 3;
 
-        public static final boolean kFrontLeftInverted = true;
-        public static final boolean kFrontRightInverted = false;
-        public static final boolean kRearLeftInverted = true;
-        public static final boolean kRearRightInverted = false;
+        public static final boolean kFrontLeftInverted = false;
+        public static final boolean kFrontRightInverted = true;
+        public static final boolean kRearLeftInverted = false;
+        public static final boolean kRearRightInverted = true;
 
         public static final int kCurrentLimit = 55;
 
@@ -41,7 +41,7 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int kArmCanId = 2;
+        public static final int kArmCanId = 10;
         public static final boolean kArmInverted = true;
         public static final int kCurrentLimit = 40;
     
@@ -70,7 +70,7 @@ public final class Constants {
       }
 
     public static final class Intake {
-        public static final int kCanId = 1;
+        public static final int kCanId = 7;
         public static final boolean kMotorInverted = true;
         public static final int kCurrentLimit = 80;
     
@@ -85,13 +85,18 @@ public final class Constants {
       }
 
       public static final class Launcher {
-        public static final int kTopCanId = 3;
-        public static final int kBottomCanId = 4;
+        public static final int kTopCanId = 10;
+        public static final int kBottomCanId = 11;
     
         public static final int kCurrentLimit = 80;
     
         public static final double kTopPower = 0.7;
         public static final double kBottomPower = 0.8;
+      }
+
+      public static final class Climber {
+        public static final int kLeftClimber = 5;
+        public static final int kRightClimber = 6;
       }
 
       public static final class IMU {
