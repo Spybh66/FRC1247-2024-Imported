@@ -51,7 +51,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+    m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runManual(m_driverController.getRightY()), m_arm));
 
     // set the intake to stop (0 power) when no other command is running
     m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
@@ -76,7 +76,7 @@ public class RobotContainer {
             MathUtil.applyDeadband(m_driverController.getLeftX() * Constants.Drivetrain.kTurningScale,
                 Constants.OIConstants.kDriveDeadband)),
         m_drivetrain));
-    new JoystickButton(m_driverController, PS4Controller.Button.kL1.value)
+/*     new JoystickButton(m_driverController, PS4Controller.Button.kL1.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
     new Trigger(
         () -> m_driverController.getL2Axis() > Constants.OIConstants.kTriggerButtonThreshold)
@@ -84,6 +84,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, PS4Controller.Button.kPS.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kHomePosition)));
 
+     */
     // intake controls (run while button is held down, run retract command once when
     // the button is
     // released)

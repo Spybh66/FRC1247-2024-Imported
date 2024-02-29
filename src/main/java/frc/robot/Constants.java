@@ -41,7 +41,12 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int kArmCanId = 10;
+        public static final int kArm1CanId = 8;
+        public static final int kArm2CanId = 9;
+        public static final double kArmPowerScale = 1;
+
+
+
         public static final boolean kArmInverted = true;
         public static final int kCurrentLimit = 40;
     
@@ -77,7 +82,7 @@ public final class Constants {
         public static final PIDGains kPositionGains = new PIDGains(1.0, 0.0, 0.0);
         public static final double kPositionTolerance = 0.5;
     
-        public static final double kIntakePower = 0.7;
+        public static final double kIntakePower = 0.4;
     
         public static final double kRetractDistance = -3.5;
     
