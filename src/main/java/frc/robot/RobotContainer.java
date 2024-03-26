@@ -13,7 +13,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
+//import frc.robot.subsystems.LauncherSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -37,7 +37,7 @@ public class RobotContainer {
   // ExampleCommand(m_exampleSubsystem);
 
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
-  private final LauncherSubsystem m_launcher = new LauncherSubsystem();
+  //private final LauncherSubsystem m_launcher = new LauncherSubsystem();
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
@@ -57,7 +57,7 @@ public class RobotContainer {
     m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
 
     // configure the launcher to stop when no other command is running
-    m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
+    //m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
   }
 
   /**
@@ -97,11 +97,11 @@ public class RobotContainer {
         .whileTrue(new RunCommand(() -> m_intake.setPower(-1.0)));
 
     // launcher controls (button to pre-spin the launcher and button to launch)
-    new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
-            .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
+    //new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
+    //        .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
 
-    new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
-            .onTrue(m_intake.feedLauncher(m_launcher));
+    //new JoystickButton(m_driverController, PS4Controller.Button.kCross.value)
+    //        .onTrue(m_intake.feedLauncher(m_launcher));
 
     new JoystickButton(m_driverController, PS4Controller.Button.kCircle.value)
             .whileTrue(new RunCommand(() -> m_climber.setPower(.5)))
